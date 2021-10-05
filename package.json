@@ -1,0 +1,27 @@
+{
+  "name": "list-attr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "list-attr": "bin/list-attr.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazhashimoto/list-attr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kazhashimoto/list-attr/issues"
+  },
+  "homepage": "https://github.com/kazhashimoto/list-attr#readme",
+  "dependencies": {
+    "commander": "^8.2.0",
+    "debug": "^4.3.2"
+  }
+}
