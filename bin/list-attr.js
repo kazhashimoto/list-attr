@@ -10,8 +10,8 @@ program
   .version('1.0.0')
   .usage('[options] htmlfile')
   .showHelpAfterError()
-  .option('-t <tag>', 'specify tag name')
-  .option('-a <attr>', 'query attribute name');
+  .option('-t <tag>', 'specify tag name (default: img)')
+  .option('-a <attr>', 'query attribute name(s) (comma separated list)');
 
 program.parse(process.argv);
 const options = program.opts();
@@ -23,25 +23,50 @@ if (!program.args.length) {
 
 let htmlPath = program.args[0];
 let tag = options.t? options.t: 'img';
-let reader = JSDOM.fromFile(htmlPath);
+
+const attrMap = new Map();
+attrMap
+  .set('img', ['src', 'alt'])
+  .set('a', ['href'])
+  .set('script', ['src'])
+  .set('link', ['href'])
+  .set('meta', ['name', 'content']);
+
+let attr_list = [];
+if (options.a) {
+  attr_list = options.a.split(',');
+}
+let target = attrMap.get(tag);
+if (target) {
+  attr_list.forEach(a => {
+    target.push(a);
+  });
+} else {
+  attrMap.set(tag, attr_list);
+  target = attrMap.get(tag);
+}
+debug('attrMap', attrMap);
+
+const reader = JSDOM.fromFile(htmlPath);
 reader.then(dom => {
   const { document } = dom.window;
   const elements = document.querySelectorAll(tag);
-  elements.forEach(e => {
-    printAttributes(e, options.a);
-  });
+  console.log(`<${tag}>`);
+  for (let i = 0; i < elements.length; i++) {
+    console.log(`[${i + 1}/${elements.length}]`)
+    printAttributes(elements[i]);
+  }
 })
 .catch(err => {
   console.error(err.message);
 });
 
-function printAttributes(e, attr) {
-  console.log(e.localName);
+function printAttributes(e) {
   for (let i = 0; i < e.attributes.length; i++) {
     const a = e.attributes.item(i);
-    if (attr && attr != a.name) {
+    if (!target.includes(a.name)) {
       continue;
     }
-    console.log(a.name +': '+ a.value);
+    console.log(`${a.name}: ${a.value}`);
   }
 }
