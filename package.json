@@ -1,5 +1,5 @@
 {
-  "name": "list-attr",
+  "name": "@kazhashimoto/list-attr",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -28,5 +28,8 @@
   },
   "devDependencies": {
     "eslint": "^7.32.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
