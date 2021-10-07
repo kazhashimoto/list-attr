@@ -47,7 +47,13 @@ if (target) {
 }
 debug('attrMap', attrMap);
 
-const reader = JSDOM.fromFile(htmlPath);
+let reader;
+if (/^https?:\/{2}/.test(htmlPath)) {
+  reader = JSDOM.fromURL(htmlPath);
+} else {
+  reader = JSDOM.fromFile(htmlPath);
+}
+
 reader.then(dom => {
   const { document } = dom.window;
   const elements = document.querySelectorAll(tag);
