@@ -48,7 +48,8 @@ $ list-attr -t script index.html
 $ list-attr -t img -a width,height index.html
 ```
 
-結果の出力形式は以下のとおりです。出力の最初の行に検索対象のタグ名が表示され、出現順に[x/N]形式のラベルのついたブロックが続きます。ここでNはタグの総数、xは1から始まるインデックス番号です。各ブロックは、属性と値のペアが１行ずつ表示されます。タグが該当する属性を持たない場合は、そのタグに関してブロックの内容は空で[x/N]ラベルのみ表示されます。
+## Examples
+出力の各行の先頭の数字は、HTMLファイル中の行番号を表します。各ブロックは１行目に検索対象のタグ名、その後ろに属性と値のペアが続きます。タグ名の右側に表示された[x/N]形式のラベルは、タグの検索結果の件数Nとインデックスxを表します。xの開始番号は1です。
 ```
 $ list-attr -a width,height sample.html
 25 <img> [1/3]
@@ -61,8 +62,7 @@ $ list-attr -a width,height sample.html
 34    height: 400
 41 <img> [3/3]
 42    src: a3.png
-43    alt: 
-...
+43    alt:
 ```
 
 ## Turning on debug mode
