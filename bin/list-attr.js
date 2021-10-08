@@ -47,32 +47,36 @@ if (target) {
 }
 debug('attrMap', attrMap);
 
+const jsdom_options = { includeNodeLocations: true };
+
 let reader;
 if (/^https?:\/{2}/.test(htmlPath)) {
-  reader = JSDOM.fromURL(htmlPath);
+  reader = JSDOM.fromURL(htmlPath, jsdom_options);
 } else {
-  reader = JSDOM.fromFile(htmlPath);
+  reader = JSDOM.fromFile(htmlPath, jsdom_options);
 }
 
 reader.then(dom => {
   const { document } = dom.window;
   const elements = document.querySelectorAll(tag);
-  console.log(`<${tag}>`);
   for (let i = 0; i < elements.length; i++) {
-    console.log(`[${i + 1}/${elements.length}]`)
-    printAttributes(elements[i]);
+    const o = elements[i];
+    const location = dom.nodeLocation(o);
+    console.log(`${location.startLine} <${tag}> [${i + 1}/${elements.length}]`);
+    printAttributes(o, location);
   }
 })
 .catch(err => {
   console.error(err.message);
 });
 
-function printAttributes(e) {
+function printAttributes(e, location) {
   for (let i = 0; i < e.attributes.length; i++) {
     const a = e.attributes.item(i);
     if (!target.includes(a.name)) {
       continue;
     }
-    console.log(`${a.name}: ${a.value}`);
+    const a_loc = location.attrs[a.name];
+    console.log(`${a_loc.startLine}    ${a.name}: ${a.value}`);
   }
 }
