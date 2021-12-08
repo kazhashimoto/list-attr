@@ -7,7 +7,7 @@ const debug = require('debug')('list-attr');
 
 program
   .name('list-attr')
-  .version('1.0.3')
+  .version('1.0.4')
   .usage('[options] htmlfile')
   .showHelpAfterError()
   .option('-t <tag>', 'specify tag name (default: img)')
@@ -26,11 +26,12 @@ let tag = options.t? options.t: 'img';
 
 const attrMap = new Map();
 attrMap
-  .set('img', ['src', 'alt'])
   .set('a', ['href'])
-  .set('script', ['src'])
+  .set('iframe', ['src'])
+  .set('img', ['src', 'alt'])
   .set('link', ['href'])
-  .set('meta', ['name', 'content']);
+  .set('meta', ['name', 'content'])
+  .set('script', ['src']);
 
 let attr_list = [];
 if (options.a) {
