@@ -24,6 +24,7 @@ Options:
   -V, --version  output the version number
   -t <tag>       specify tag name (default: img)
   -a <attr>      query attribute name(s) (comma separated list)
+  -n, --null     show attributes that have NULL values
   -h, --help     display help for command
 ```
 
@@ -46,6 +47,18 @@ $ list-attr -t script index.html
 -aオプションで検索対象の属性を追加します。以下の例ではimgタグのsrc, alt属性に加えて、widthおよびheight属性があればそれらの値も出力します。
 ```
 $ list-attr -t img -a width,height index.html
+```
+
+-nオプションで属性値がnull文字列になっているタグを出力します。以下の例は、alt属性の値が空文字列になっているimg要素を出力します。
+```
+$ list-attr -t img -n test.html
+35 <img> [3/19]
+35    src: foo.jpg
+35    alt:
+37 <img> [4/19]
+37    src: bar.jpg
+37    alt:
+$
 ```
 
 ## Examples
