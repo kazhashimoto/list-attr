@@ -25,6 +25,8 @@ Options:
   -t <tag>       specify tag name (default: img)
   -a <attr>      query attribute name(s) (comma separated list)
   -n, --null     show attributes that have NULL values
+  --not-root-path  show links that have pathnames other than site-root relative
+                   path.
   -h, --help     display help for command
 ```
 
@@ -59,6 +61,15 @@ $ list-attr -t img -n test.html
 37    src: bar.jpg
 37    alt:
 $
+```
+
+--not-root-pathオプションは、hrefやsrc属性の値がサイトルート相対パス以外の形式になっているタグを出力します。
+```
+$ list-attr -t img --not-root-path test.html
+5 <img> [3/19]
+35    src: foo.jpg
+35    alt:
+....
 ```
 
 ## Examples
