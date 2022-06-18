@@ -7,7 +7,7 @@ const debug = require('debug')('list-attr');
 
 program
   .name('list-attr')
-  .version('1.0.5')
+  .version('1.0.7')
   .usage('[options] htmlfile')
   .showHelpAfterError()
   .option('-t <tag>', 'specify tag name (default: img)')
@@ -42,9 +42,9 @@ if (options.a) {
 }
 let target = attrMap.get(tag);
 if (target) {
-  attr_list.forEach(a => {
+  for (const a of attr_list) {
     target.push(a);
-  });
+  }
 } else {
   attrMap.set(tag, attr_list);
   target = attrMap.get(tag);
@@ -96,6 +96,22 @@ function printAttributes(e, location) {
 }
 
 function checkNullValues(e) {
+  const stat = {};
+  for (const attr of target) {
+    stat[attr] = 0;
+  }
+  for (let i = 0; i < e.attributes.length; i++) {
+    const a = e.attributes[i];
+    if (stat[a.name] !== undefined) {
+      stat[a.name]++;
+    }
+  }
+  for (const p in stat) {
+    if (!stat[p]) {
+      return true;
+    }
+  }
+
   for (let i = 0; i < e.attributes.length; i++) {
     const a = e.attributes[i];
     if (target.includes(a.name)) {
