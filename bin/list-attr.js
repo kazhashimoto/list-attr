@@ -13,6 +13,7 @@ program
   .option('-t <tag>', 'specify tag name (default: img)')
   .option('-a <attr>', 'query attribute name(s) (comma separated list)')
   .option('-n, --null', 'show attributes that have NULL values')
+  .option('--not-root-path', 'show links that have pathnames other than site-root relative path.');
 
 program.parse(process.argv);
 const options = program.opts();
@@ -32,6 +33,7 @@ attrMap
   .set('img', ['src', 'alt'])
   .set('link', ['href'])
   .set('meta', ['name', 'content'])
+  .set('source', ['src', 'srcset'])
   .set('script', ['src']);
 
 let attr_list = [];
@@ -68,6 +70,11 @@ reader.then(dom => {
         continue;
       }
     }
+    if (options.notRootPath) {
+      if (!checkRelativePath(o)) {
+        continue;
+      }
+    }
     const location = dom.nodeLocation(o);
     console.log(`${location.startLine} <${tag}> [${i + 1}/${elements.length}]`);
     printAttributes(o, location);
@@ -94,6 +101,21 @@ function checkNullValues(e) {
     if (target.includes(a.name)) {
       if (!a.value) {
         return true;
+      }
+    }
+  }
+  return false;
+}
+
+function checkRelativePath(e) {
+  const url_attrs = ['href', 'src', 'srcset'];
+  for (let i = 0; i < e.attributes.length; i++) {
+    const a = e.attributes[i];
+    if (target.includes(a.name)) {
+      if (url_attrs.includes(a.name)) {
+        if (!/^\//.test(a.value)) {
+          return true;
+        }
       }
     }
   }
