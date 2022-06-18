@@ -7,11 +7,12 @@ const debug = require('debug')('list-attr');
 
 program
   .name('list-attr')
-  .version('1.0.4')
+  .version('1.0.5')
   .usage('[options] htmlfile')
   .showHelpAfterError()
   .option('-t <tag>', 'specify tag name (default: img)')
-  .option('-a <attr>', 'query attribute name(s) (comma separated list)');
+  .option('-a <attr>', 'query attribute name(s) (comma separated list)')
+  .option('-n, --null', 'show attributes that have NULL values')
 
 program.parse(process.argv);
 const options = program.opts();
@@ -62,6 +63,11 @@ reader.then(dom => {
   const elements = document.querySelectorAll(tag);
   for (let i = 0; i < elements.length; i++) {
     const o = elements[i];
+    if (options.null) {
+      if (!checkNullValues(o)) {
+        continue;
+      }
+    }
     const location = dom.nodeLocation(o);
     console.log(`${location.startLine} <${tag}> [${i + 1}/${elements.length}]`);
     printAttributes(o, location);
@@ -73,11 +79,23 @@ reader.then(dom => {
 
 function printAttributes(e, location) {
   for (let i = 0; i < e.attributes.length; i++) {
-    const a = e.attributes.item(i);
+    const a = e.attributes[i];
     if (!target.includes(a.name)) {
       continue;
     }
     const a_loc = location.attrs[a.name];
     console.log(`${a_loc.startLine}    ${a.name}: ${a.value}`);
   }
+}
+
+function checkNullValues(e) {
+  for (let i = 0; i < e.attributes.length; i++) {
+    const a = e.attributes[i];
+    if (target.includes(a.name)) {
+      if (!a.value) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
