@@ -3,16 +3,16 @@ list-attrは、HTMLファイルから特定のタグについて属性値の一�
 
 ## Installation
 ```
-$ mkdir test-package
-$ cd test-package/
-$ npm init -y
-$ echo "@kazhashimoto:registry=https://npm.pkg.github.com" > .npmrc
-$ npm install -g @kazhashimoto/list-attr
+mkdir test-package
+cd test-package/
+npm init -y
+echo "@kazhashimoto:registry=https://npm.pkg.github.com" > .npmrc
+npm install -g @kazhashimoto/list-attr
 ```
 
 How to uninstall this package:
 ```
-$ npm uninstall -g @kazhashimoto/list-attr
+npm uninstall -g @kazhashimoto/list-attr
 ```
 
 ## Usage
@@ -32,23 +32,25 @@ Options:
 
 オプションなしで実行した時は、Webページに含まれるimgタグのsrcとalt属性を出力します。検索対象のHTMLファイルにはリモートのURLも指定できます。
 ```
-$ list-attr index.html
-$ list-attr https://www.example.com
+list-attr index.html
+```
+```
+list-attr https://www.example.com
 ```
 
 -tオプションで検索対象のタグを指定します。たとえば、以下の例ではWebページに含まれるaタグのhref属性を出力します。
 ```
-$ list-attr -t a index.html
+list-attr -t a index.html
 ```
 
 これはscriptタグのsrc属性を出力します。
 ```
-$ list-attr -t script index.html
+list-attr -t script index.html
 ```
 
 -aオプションで検索対象の属性を追加します。以下の例ではimgタグのsrc, alt属性に加えて、widthおよびheight属性があればそれらの値も出力します。
 ```
-$ list-attr -t img -a width,height index.html
+list-attr -t img -a width,height index.html
 ```
 
 -nオプションで属性値がnull文字列になっているタグを出力します。以下の例は、alt属性の値が空文字列になっているimg要素を出力します。
@@ -60,7 +62,6 @@ $ list-attr -t img -n test.html
 37 <img> [4/19]
 37    src: bar.jpg
 37    alt:
-$
 ```
 
 --not-root-pathオプションは、hrefやsrc属性の値がサイトルート相対パス以外の形式になっているタグを出力します。
@@ -91,5 +92,5 @@ $ list-attr -a width,height sample.html
 
 ## Turning on debug mode
 ```
-$ DEBUG=* list-attr [options] htmlfile
+DEBUG=* list-attr [options] htmlfile
 ```
