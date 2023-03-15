@@ -1,6 +1,6 @@
 {
   "name": "@kazhashimoto/list-attr",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -21,15 +21,15 @@
     "url": "https://github.com/kazhashimoto/list-attr/issues"
   },
   "homepage": "https://github.com/kazhashimoto/list-attr#readme",
-  "dependencies": {
-    "commander": "^8.2.0",
-    "debug": "^4.3.2",
-    "jsdom": "^17.0.0"
-  },
-  "devDependencies": {
-    "eslint": "^7.32.0"
-  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "commander": "^10.0.0",
+    "debug": "^4.3.4",
+    "jsdom": "^21.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0"
   }
 }
