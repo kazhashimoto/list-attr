@@ -1,6 +1,6 @@
 {
   "name": "@kazhashimoto/list-attr",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -16,7 +16,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kazhashimoto/list-attr/issues"
   },
