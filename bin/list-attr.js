@@ -7,7 +7,7 @@ const debug = require('debug')('list-attr');
 
 program
   .name('list-attr')
-  .version('1.0.11')
+  .version('1.0.12')
   .usage('[options] htmlfile')
   .showHelpAfterError()
   .option('-t <tag>', 'specify tag name (default: img)')
